@@ -5,6 +5,8 @@
 <template>
   <Navbar />
   <main>
-    <router-view></router-view>
+    <div class="max-w-[1200px] mx-auto">
+      <router-view></router-view>
+    </div>
   </main>
 </template>

@@ -2,13 +2,21 @@
     import { onMounted, ref, computed } from 'vue';
     import axiosClient from '../axiosClient';
     import { Ingredient } from '../types';
+    import store from '../store';
+    import { useRouter } from 'vue-router';
 
+    const router = useRouter();
     const ingredients = ref<Ingredient[]>([]);
     const keyword = ref('');
     const computedIngredients = computed(() => {
         if (!keyword.value) return ingredients.value;
         return ingredients.value.filter(ingredient => ingredient.strIngredient.toLowerCase().includes(keyword.value.toLowerCase()))
     });
+
+    const openIngredient = (ingredient: Ingredient) => {
+        store.commit('setIngredient', ingredient);
+        router.push({ name: 'byIngredient', params: { ingredient: ingredient.strIngredient } });
+    }
 
     onMounted(() => {
         axiosClient.get('list.php?i=list').then(({data}) => {
@@ -29,13 +37,13 @@
                 placeholder="Search for Meals">
         </div>
 
-        <router-link 
-            v-for="ingredient of computedIngredients" :key="ingredient.idIngredient" 
-            :to="{name: 'byIngredient', params: { ingredient: ingredient.strIngredient }}" 
+        <a  href="#"
+            v-for="ingredient of computedIngredients" :key="ingredient.idIngredient"
+            @click.prevent="openIngredient(ingredient)"
             class="block bg-white rounded p-3 mb-3 shadow"
         >
             <h3 class="text-2xl font-bold mb-3">{{ ingredient.strIngredient }}</h3>
-            <p>{{ ingredient.strDescription }}</p>
-        </router-link>
+            <!-- <p>{{ ingredient.strDescription }}</p> -->
+        </a>
     </div>
 </template>

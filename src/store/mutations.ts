@@ -10,3 +10,6 @@ export function setMealsByLetter(state, meals) {
 export function setMealsByIngredient(state, meals) {
     state.mealsByIngredient = meals;
 }
+export function setIngredient(state, ingredient) {
+    state.ingredient = ingredient;
+}

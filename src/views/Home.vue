@@ -1,22 +1,28 @@
 <script setup lang="ts">
-    import { computed, onMounted } from 'vue';
-    import store from '../store';
-    import axiosClient from '../axiosClient'
+    import { ref, onMounted } from 'vue';
+    import axiosClient from '../axiosClient';
+    import { Meal } from '../types';
+    import Meals from '../components/Meals.vue';
 
-    const meals = computed(() => store.state.meals);
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    const meals = ref<Meal[]>([]);
 
     onMounted(async () => {
-        const response = await axiosClient.get('/list.php?i=list');
-        const ingredients = response.data;
-        console.log(response.data)
-    });
+        for (let i = 0; i < 10; i++) {
+            axiosClient
+            .get(`random.php`)
+            .then(({ data }) => {
+                if (!data.meals) return;
+                meals.value.push(data.meals[0] as Meal);
+            });
+        }
+    })
 </script>
 
 <template>
-    <div class="flex flex-col p-8">
-        
+    <div class="p-8 pb-0 text-orange-500">
+        <h1 class="text-4xl font-bold mb-4">Random Meals</h1>
     </div>
+    <Meals :meals="meals" />
 </template>
 
 <style scoped>
