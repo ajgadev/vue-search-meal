@@ -5,7 +5,7 @@
         <div class="flex items-center gap-1">
           <router-link class="inline-flex items-center px-2 transition-colors hover:bg-purple-200 h-full" :to="{name: 'byName'}">Search by Meal</router-link>
           <router-link class="inline-flex items-center px-2 transition-colors hover:bg-purple-200 h-full" :to="{name: 'byLetter'}">Search by Letters</router-link>
-          <router-link class="inline-flex items-center px-2 transition-colors hover:bg-purple-200 h-full" :to="{name: 'byIngredient'}">Search by Ingredients</router-link>
+          <router-link class="inline-flex items-center px-2 transition-colors hover:bg-purple-200 h-full" :to="{name: 'ingredients'}">Search by Ingredients</router-link>
         </div>
     </header>
 </template>

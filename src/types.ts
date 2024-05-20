@@ -52,4 +52,11 @@ export interface Meal {
     strImageSource?: null;
     strCreativeCommonsConfirmed?: null;
     dateModified?: null;
-  }  
+  }
+
+  export interface Ingredient {
+    idIngredient: string;
+    strDescription: string;
+    strIngredient: string;
+    strType: string | null;
+  }
