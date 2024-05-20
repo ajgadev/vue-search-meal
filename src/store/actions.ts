@@ -6,6 +6,18 @@ export function searchMeals({commit}, keyword) {
             commit('setSearchedMeals', data.meals)
         })
 }
+export function searchMealsByLetter({commit}, letter) {
+    axiosClient.get(`search.php?f=${letter}`)
+        .then(({ data }) => {
+            commit('setMealsByLetter', data.meals)
+        })
+}
+export function searchMealsByIngredient({commit}, ingredient) {
+    axiosClient.get(`search.php?i=${ingredient}`)
+        .then(({ data }) => {
+            commit('setMealsByIngredient', data.meals)
+        })
+}
 
 export function getMealById({commit}, idMeal) {
     axiosClient.get(`lookup.php?i=${idMeal}`)
