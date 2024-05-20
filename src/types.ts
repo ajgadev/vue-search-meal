@@ -1,3 +1,4 @@
+import { Commit } from 'vuex';
 export interface Meal {
     idMeal: string;
     strMeal: string;
@@ -59,4 +60,17 @@ export interface Meal {
     strDescription: string;
     strIngredient: string;
     strType: string | null;
+  }
+
+  export interface State {
+    searchedMeals: Meal[] | null;
+    mealsByLetter: Meal[] | null;
+    mealsByIngredient: Meal[] | null;
+    ingredient: Ingredient | null;
+    mealById: {[key: string]: Meal};
+  }
+
+  export interface ActionContext {
+    commit: Commit;
+    state: State;
   }
