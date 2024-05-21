@@ -3,11 +3,22 @@
     import { useRoute } from 'vue-router';
     import store from '../store';
     import YouTubeButton from '../components/YouTubeButton.vue';
+    import { Meal } from '../types';
 
     // const meal = ref({});
     const route = useRoute();
-    const idMeal = route.params.id;
+    let idMeal = route.params.id;
+    if (Array.isArray(idMeal)) {
+        idMeal = idMeal[0];
+    }
     const meal = computed(() => store.state.mealById[idMeal]);
+
+    const getMealProperty = (meal: Meal, property: string) => {
+        if (property in meal && meal[property as keyof Meal] != '' && meal[property as keyof Meal] != " ") {
+            return meal[property as keyof Meal];
+        }
+        return null;
+    }
 
     onMounted(() => {
         if (!meal.value && idMeal != null) {
@@ -36,21 +47,20 @@
         <div class="my-4">
             {{ meal.strInstructions }}
         </div>
-
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
                 <h2 class="text-2xl font-semibold mb-2">Ingredients</h2>
                 <template v-for="(_, index) of new Array(20)">
-                    <ul v-if="meal[`strIngredient${index + 1}`]">
-                        {{ index + 1 }}. {{ meal[`strIngredient${index + 1}`] }}
+                    <ul v-if="getMealProperty(meal, `strIngredient${index + 1}`)">
+                        {{ index + 1 }}. {{ getMealProperty(meal, `strIngredient${index + 1}`) }}
                     </ul>
                 </template>
             </div>
             <div>
                 <h2 class="text-2xl font-semibold mb-2">Measures</h2>
                 <template v-for="(_, index) of new Array(20)">
-                    <ul v-if="meal[`strMeasure${index + 1}`]">
-                        {{ index + 1 }}. {{ meal[`strMeasure${index + 1}`] }}
+                    <ul v-if="getMealProperty(meal,`strMeasure${index + 1}`)">
+                        {{ index + 1 }}. {{ getMealProperty(meal, `strMeasure${index + 1}`) }}
                     </ul>
                 </template>
             </div>
@@ -58,7 +68,7 @@
 
         <div class="mt-5">
             <YouTubeButton :href="meal.strYoutube">Check on YouTube</YouTubeButton>
-            <a :href="meal.strSource"
+            <a :href="meal.strSource || '#'"
                 target="_blank" 
                 class="px-3 ml-3 py-2 rounded border-2 border-transparent bg-indigo-200 hover:bg-indigo-300 text-indigo-800 hover:text-white transition-colors cursor-pointer"
             > 

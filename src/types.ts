@@ -63,10 +63,10 @@ export interface Meal {
   }
 
   export interface State {
-    searchedMeals: Meal[] | null;
-    mealsByLetter: Meal[] | null;
-    mealsByIngredient: Meal[] | null;
-    ingredient: Ingredient | null;
+    searchedMeals: Meal[];
+    mealsByLetter: Meal[];
+    mealsByIngredient: Meal[];
+    ingredient: Ingredient;
     mealById: {[key: string]: Meal};
   }
 

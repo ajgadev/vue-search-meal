@@ -3,7 +3,7 @@
     import { Meal } from '../types';
     
     defineProps<{
-        meals: Meal[] | undefined
+        meals: Meal[]
     }>();
 </script>
 
